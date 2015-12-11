@@ -1,6 +1,10 @@
 from itertools import chain
 import os
 
+srcWidth = 1920
+srcHeight = 1080
+
+
 keepData = False
 
 rotationData = []
@@ -42,6 +46,8 @@ def extractPositionData():
             elif keepData:
                 positionData.append(line)
 
+
+
 with open('/Users/bbmp03/GitHub/Various Python Scripts/KeyframeKonverter/dataFiles/clipboard Data/AEOut.txt', 'r') as aeRead:
     if "Rotation" in aeRead.read().strip().split():
         extractRotationData()
@@ -53,6 +59,7 @@ with open('/Users/bbmp03/GitHub/Various Python Scripts/KeyframeKonverter/dataFil
 with open('/Users/bbmp03/GitHub/Various Python Scripts/KeyframeKonverter/dataFiles/clipboard Data/AEOut.txt', 'r') as aeRead:
     if "Position" in aeRead.read().strip().split():
         extractPositionData()
+
 
 AERData = []
 AESData = []
@@ -75,6 +82,44 @@ for line in positionData:
     #remove frame number + z coord
     org = org[1:len(org)-1:]
     AEPData.append(org)
+
+"""
+Conversions:
+"""
+
+#Rotation Data Convert
+AERData = [(float(x)*(-1)) for line in AERData for x in line]
+AERData = [str(line) for line in AERData]
+AERData = [list(x) for x in zip(AERData)]
+print("AERDATA = ",AERData)
+
+#Scale Data Convert
+AESData = [(float(x)/100) for line in AESData for x in line]
+AESData = [str(line) for line in AESData]
+AESData = [list(x) for x in zip(AESData[0::2],AESData[1::2])]
+print("ARSDATA = ", AESData)
+
+#Position Data Convert
+AEPDataX = []
+AEPDataX.append(list(coord[0::2] for coord in AEPData))
+print("AEPDATAX = ", AEPDataX)
+AEPDataX = [(((float(x)*(-1))+srcHeight)) for item in AEPDataX for y in item for x in y]
+AEPDataX = [str(line) for line in AEPDataX]
+print("AEPDATAX CONV = ", AEPDataX)
+
+
+AEPDataY = []
+AEPDataY.append(list(coord[1::2] for coord in AEPData))
+print("AEPDATAY = ", AEPDataY)
+AEPDataY = [(((float(x)*(-1))+srcHeight)) for item in AEPDataY for y in item for x in y]
+AEPDataY = [str(line) for line in AEPDataY]
+print("AEPDATAY CONV = ", AEPDataY)
+
+AEPData = [list(x) for x in zip(AEPDataX, AEPDataY)]
+print ("AEPDATA = ", AEPData)
+
+
+
 
 translationData = zip(AERData, AESData, AEPData)
 translationData = list(translationData)
@@ -106,6 +151,7 @@ def nukeKeysCreate():
             for line in wSFix:
                 cleanline = line.lstrip()
                 writeOut.write(cleanline)
+                #print("Result: ", cleanline)
 
 def nukeKeysTempDel():
     os.remove("nukeKeysTemp.txt")
