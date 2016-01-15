@@ -1,8 +1,0 @@
-Adobe After Effects 8.0 Keyframe Data
-
-	Units Per Second	25
-	Source Width	1920
-	Source Height	1080
-	Source Pixel Aspect Ratio	1
-	Comp Pixel Aspect Ratio	1
-

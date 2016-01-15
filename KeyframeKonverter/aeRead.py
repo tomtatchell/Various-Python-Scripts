@@ -12,7 +12,7 @@ scaleData = []
 positionData = []
 def extractRotationData():
     keepData = False
-    with open('/Users/bbmp03/GitHub/Various Python Scripts/KeyframeKonverter/dataFiles/clipboard Data/AEOut.txt', 'r') as aeRead:
+    with open('/Users/bbmp03/GitHub/Various Python Scripts/KeyframeKonverter/dataFiles/clipboardReadData/AEOut.txt', 'r') as aeRead:
         for line in aeRead:
             if line.strip() == ("Frame\tdegrees"):
                 keepData = True
@@ -24,7 +24,7 @@ def extractRotationData():
 
 def extractScaleData():
     keepData = False
-    with open('/Users/bbmp03/GitHub/Various Python Scripts/KeyframeKonverter/dataFiles/clipboard Data/AEOut.txt', 'r') as aeRead:
+    with open('/Users/bbmp03/GitHub/Various Python Scripts/KeyframeKonverter/dataFiles/clipboardReadData/AEOut.txt', 'r') as aeRead:
         for line in aeRead:
             if line.strip() == ("Frame\tX percent\tY percent\tZ percent"):
                 keepData = True
@@ -36,7 +36,7 @@ def extractScaleData():
 
 def extractPositionData():
     keepData = False
-    with open('/Users/bbmp03/GitHub/Various Python Scripts/KeyframeKonverter/dataFiles/clipboard Data/AEOut.txt', 'r') as aeRead:
+    with open('/Users/bbmp03/GitHub/Various Python Scripts/KeyframeKonverter/dataFiles/clipboardReadData/AEOut.txt', 'r') as aeRead:
         for line in aeRead:
             if line.strip() == ("Frame\tX pixels\tY pixels\tZ pixels"):
                 keepData = True
@@ -47,16 +47,15 @@ def extractPositionData():
                 positionData.append(line)
 
 
-
-with open('/Users/bbmp03/GitHub/Various Python Scripts/KeyframeKonverter/dataFiles/clipboard Data/AEOut.txt', 'r') as aeRead:
+with open('/Users/bbmp03/GitHub/Various Python Scripts/KeyframeKonverter/dataFiles/clipboardReadData/AEOut.txt', 'r') as aeRead:
     if "Rotation" in aeRead.read().strip().split():
         extractRotationData()
 
-with open('/Users/bbmp03/GitHub/Various Python Scripts/KeyframeKonverter/dataFiles/clipboard Data/AEOut.txt', 'r') as aeRead:
+with open('/Users/bbmp03/GitHub/Various Python Scripts/KeyframeKonverter/dataFiles/clipboardReadData/AEOut.txt', 'r') as aeRead:
     if "Scale" in aeRead.read().strip().split():
         extractScaleData()
 
-with open('/Users/bbmp03/GitHub/Various Python Scripts/KeyframeKonverter/dataFiles/clipboard Data/AEOut.txt', 'r') as aeRead:
+with open('/Users/bbmp03/GitHub/Various Python Scripts/KeyframeKonverter/dataFiles/clipboardReadData/AEOut.txt', 'r') as aeRead:
     if "Position" in aeRead.read().strip().split():
         extractPositionData()
 
@@ -121,8 +120,7 @@ print ("AEPDATA = ", AEPData)
 
 
 
-translationData = zip(AERData, AESData, AEPData)
-translationData = list(translationData)
+translationData = list(zip(AERData, AESData, AEPData))
 
 tData = []
 for i in translationData:
@@ -131,7 +129,6 @@ for i in translationData:
             tData.append(x)
 
 nCB = [tData[x:x+5] for x in range(0, len(tData), 5)]
-#print("nCB: ", nCB)
 nCBFormat = []
 for line in nCB:
     nCBFormat.append(line)
@@ -142,19 +139,19 @@ nCBChain = list(chain.from_iterable(nCBFormat))
 nCBChain = " ".join(nCBChain)
 
 def writeToTemp():
-    with open("nukeKeysTemp.txt", 'w') as keyFile:
+    with open("/Users/bbmp03/GitHub/Various Python Scripts/KeyframeKonverter/dataFiles/exports/nukeKeysTemp.txt", 'w') as keyFile:
         keyFile.write(str(nCBChain))
 
 def nukeKeysCreate():
-    with open("nukeKeysOut_v01.txt", 'w') as writeOut:
-        with open("nukeKeysTemp.txt", 'r') as wSFix:
+    with open("/Users/bbmp03/GitHub/Various Python Scripts/KeyframeKonverter/dataFiles/exports/nukeKeysOut_v01.txt", 'w') as writeOut:
+        with open("/Users/bbmp03/GitHub/Various Python Scripts/KeyframeKonverter/dataFiles/exports/nukeKeysTemp.txt", 'r') as wSFix:
             for line in wSFix:
                 cleanline = line.lstrip()
                 writeOut.write(cleanline)
                 #print("Result: ", cleanline)
 
 def nukeKeysTempDel():
-    os.remove("nukeKeysTemp.txt")
+    os.remove("/Users/bbmp03/GitHub/Various Python Scripts/KeyframeKonverter/dataFiles/exports/nukeKeysTemp.txt")
 
 writeToTemp()
 nukeKeysCreate()
