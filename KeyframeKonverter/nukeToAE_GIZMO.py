@@ -1,16 +1,17 @@
 from PySide import QtGui
 import sys
-import nuke
 
 
 
 app = QtGui.QApplication(sys.argv)
 cb = QtGui.QApplication.clipboard()
 
-#cb.setText("Yay") # set clipboard
-#print (cb.text()) # show current clipboard contents
+tempfile = open("temp.txt", "w+")
+tempfile.write(cb.text())
 
 
+
+"""
 
 """
 #Open File
@@ -213,4 +214,5 @@ keyFile.write(endText)
 
 
 keyFile.close()
+
 """

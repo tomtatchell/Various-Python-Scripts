@@ -11,7 +11,7 @@ Transform	Rotation
 	0	0
 	1	8.26378
 	2	16.5276
-	3	24.7913	
+	3	24.7913
 	4	33.0551
 	5	41.3189
 	6	49.5827
@@ -44,10 +44,5 @@ Transform	Position
 	7	1232.82	604.831	0
 	8	1318.97	528.173	0
 	9	1414	464	0
-
-Transform	Anchor Point
-	Frame	X pixels	Y pixels	Z pixels
-	0	-652	302	0
-
 
 End of Keyframe Data
